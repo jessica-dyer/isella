@@ -12,7 +12,7 @@ sold_orders$date_diff2 <- round(sold_orders$date_diff2, digits = 0)
 sold_orders$date_diff2 <- ifelse(sold_orders$date_diff2<0, NA, sold_orders$date_diff2)
 
 ## Why are there sold date differences of less than zero? 
-
+selling_time <- aggregate(date_diff2 ~ type, sold_orders, FUN = mean)
 selling_time <- data.table(table(sold_orders$date_diff2))
 selling_time$V1 <- as.numeric(selling_time$V1)
 
@@ -27,3 +27,5 @@ ggplot(selling_time, aes(x=V1, y=N)) +
 
 average_days <- round(mean(sold_orders$date_diff2, na.rm = TRUE), digits = 0)
 average_days
+
+plot(selling_time$V1, selling_time$N)
